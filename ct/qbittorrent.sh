@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-source <(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVED/main/misc/build.func)
+source <(curl -fsSL https://raw.githubusercontent.com/alexindigo/ProxmoxVED/main/misc/build.func)
 # Copyright (c) 2021-2026 community-scripts ORG
 # Author: tteck (tteckster) | Co-Author: Slaviša Arežina (tremor021)
-# License: MIT | https://github.com/community-scripts/ProxmoxVED/raw/main/LICENSE
+# License: MIT | https://github.com/alexindigo/ProxmoxVED/raw/main/LICENSE
 # Source: https://www.qbittorrent.org/ | Github: https://github.com/qbittorrent/qBittorrent
 
 APP="qBittorrent"

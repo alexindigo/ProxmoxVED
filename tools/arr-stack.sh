@@ -2,10 +2,10 @@
 
 # Copyright (c) 2021-2026 community-scripts ORG
 # Author: community-scripts
-# License: MIT | https://github.com/community-scripts/ProxmoxVED/raw/main/LICENSE
+# License: MIT | https://github.com/alexindigo/ProxmoxVED/raw/main/LICENSE
 
-source <(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVED/main/misc/core.func)
-source <(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVED/main/misc/tools.func)
+source <(curl -fsSL https://raw.githubusercontent.com/alexindigo/ProxmoxVED/main/misc/core.func)
+source <(curl -fsSL https://raw.githubusercontent.com/alexindigo/ProxmoxVED/main/misc/tools.func)
 
 set -eEo pipefail
 

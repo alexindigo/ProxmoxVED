@@ -2,7 +2,7 @@
 
 # Copyright (c) 2021-2026 community-scripts ORG
 # Author: Hai Tran (epiHATR)
-# License: MIT | https://github.com/community-scripts/ProxmoxVED/raw/main/LICENSE
+# License: MIT | https://github.com/alexindigo/ProxmoxVED/raw/main/LICENSE
 # Source: https://onetimesecret.com/ | Github: https://github.com/onetimesecret/onetimesecret
 
 source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
