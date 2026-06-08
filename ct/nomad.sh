@@ -28,26 +28,41 @@ function update_script() {
   check_container_storage
   check_container_resources
 
-  if [[ ! -d /opt/nomad ]]; then
+  if [[ ! -d /opt/project-nomad ]]; then
     msg_error "No ${APP} Installation Found!"
     exit
   fi
 
   if check_for_gh_release "nomad" "Crosstalk-Solutions/project-nomad"; then
-    msg_info "Stopping Service"
-    cd /opt/nomad
-    $STD docker compose down
-    msg_ok "Stopped Service"
+    msg_info "Updating ${APP}"
+    cd /opt/project-nomad
+
+    # Extract config from current compose before tarball overwrites it
+    APP_KEY=$(grep 'APP_KEY=' /opt/project-nomad/compose.yml | head -1 | sed 's/.*APP_KEY=//')
+    DB_PASS=$(grep 'DB_PASSWORD=' /opt/project-nomad/compose.yml | head -1 | sed 's/.*DB_PASSWORD=//')
+    DB_ROOT_PASS=$(grep 'MYSQL_ROOT_PASSWORD=' /opt/project-nomad/compose.yml | head -1 | sed 's/.*MYSQL_ROOT_PASSWORD=//')
+    DB_USER_PASS=$(grep 'MYSQL_PASSWORD=' /opt/project-nomad/compose.yml | head -1 | sed 's/.*MYSQL_PASSWORD=//')
+    NOMAD_URL=$(grep 'URL=' /opt/project-nomad/compose.yml | head -1 | sed 's/.*URL=//')
 
     fetch_and_deploy_gh_release "nomad" "Crosstalk-Solutions/project-nomad" "tarball"
 
-    msg_info "Updating ${APP}"
-    $STD docker compose pull
-    msg_ok "Updated ${APP}"
+    # Refresh non-user files from tarball
+    cp /opt/nomad/install/management_compose.yaml /opt/project-nomad/compose.yml
+    cp /opt/nomad/install/start_nomad.sh /opt/project-nomad/start_nomad.sh 2>/dev/null || true
+    cp /opt/nomad/install/stop_nomad.sh /opt/project-nomad/stop_nomad.sh 2>/dev/null || true
+    cp /opt/nomad/install/update_nomad.sh /opt/project-nomad/update_nomad.sh 2>/dev/null || true
+    chmod +x /opt/project-nomad/*.sh 2>/dev/null || true
 
-    msg_info "Starting Service"
-    $STD docker compose up -d
-    msg_ok "Started Service"
+    # Re-apply saved config
+    sed -i "s|URL=replaceme|URL=${NOMAD_URL}|g" /opt/project-nomad/compose.yml
+    [[ -n "$APP_KEY" ]] && sed -i "s|APP_KEY=replaceme|APP_KEY=${APP_KEY}|g" /opt/project-nomad/compose.yml
+    [[ -n "$DB_PASS" ]] && sed -i "s|DB_PASSWORD=replaceme|DB_PASSWORD=${DB_PASS}|g" /opt/project-nomad/compose.yml
+    [[ -n "$DB_ROOT_PASS" ]] && sed -i "s|MYSQL_ROOT_PASSWORD=replaceme|MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS}|g" /opt/project-nomad/compose.yml
+    [[ -n "$DB_USER_PASS" ]] && sed -i "s|MYSQL_PASSWORD=replaceme|MYSQL_PASSWORD=${DB_USER_PASS}|g" /opt/project-nomad/compose.yml
+    sed -i 's|"8080:8080"|"80:8080"|g' /opt/project-nomad/compose.yml
+
+    $STD docker compose pull
+    $STD docker compose up -d --force-recreate
     msg_ok "Updated Successfully"
   fi
   exit
