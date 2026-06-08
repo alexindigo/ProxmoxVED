@@ -2,7 +2,7 @@
 
 # Copyright (c) 2021-2026 community-scripts ORG
 # Author: Alex Indigo (alexindigo)
-# License: MIT | https://github.com/community-scripts/ProxmoxVED/raw/main/LICENSE
+# License: MIT | https://github.com/alexindigo/ProxmoxVED/raw/main/LICENSE
 # Source: https://github.com/Crosstalk-Solutions/project-nomad | https://www.projectnomad.us
 
 # This script is adapted from Project N.O.M.A.D.'s install_nomad.sh
