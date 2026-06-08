@@ -23,13 +23,17 @@ update_os
 NOMAD_DIR="/opt/project-nomad"
 
 # Accept license (interactive - legal requirement)
-echo -e "${YELLOW}#${RESET} License Agreement & Terms of Use"
-echo -e "${YELLOW}#${RESET} Project N.O.M.A.D. is licensed under the Apache License 2.0."
-echo -e "${YELLOW}#${RESET} Full license: https://www.apache.org/licenses/LICENSE-2.0"
-read -p "$(echo -e "${TAB3}${YW}I have read and accept License Agreement & Terms of Use (y/N)? ${CL}")" choice
+echo ""
+echo "License Agreement & Terms of Use"
+echo "__________________________"
+echo ""
+echo "Project N.O.M.A.D. is licensed under the Apache License 2.0."
+echo "Full license: https://www.apache.org/licenses/LICENSE-2.0"
+echo ""
+read -p "I have read and accept License Agreement & Terms of Use (y/N)? " choice
 case "$choice" in
   y|Y )
-    echo -e "${GREEN}#${RESET} License accepted."
+    echo "License accepted."
     ;;
   * )
     msg_error "License not accepted. Installation cannot continue."
